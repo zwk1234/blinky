@@ -1,0 +1,28 @@
+[package]
+edition = "2021"
+name = "blinky"
+version = "0.1.0"
+
+[profile.release]
+codegen-units = 1 # better optimizations
+debug = true # symbols are nice and they don't increase the size on Flash
+debug-assertions = false 
+incremental = false 
+lto = true 
+opt-level = 'z' 
+overflow-checks = false 
+panic = 'abort' 
+rpath = false 
+strip = true 
+
+[dependencies]
+cortex-m = "^0.7" # Access to the generic ARM peripherals
+cortex-m-rt = "^0.7" # Startup code for the ARM Core
+embedded-hal = "^0.2" # Access to generic embedded functions (`set_high`)
+panic-halt = "^0.2.0" # Panic handler
+
+# Access to the stm32f103 HAL.
+[dependencies.stm32f1xx-hal]
+# Bluepill contains a 64kB flash variant which is called "medium density"
+features = ["stm32f103", "rt", "medium"]
+version = "0.10"
